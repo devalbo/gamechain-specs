@@ -1,6 +1,5 @@
 # GameChain Protocol
 
-### Message Format
 For basic assumptions and messaging layer details, see [the GC Comm spec](gamechain-comm-specs.md).
 
 ### Message Format
