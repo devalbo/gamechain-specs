@@ -1,17 +1,9 @@
-##Protocol
+# GameChain Protocol
 
-#### Definition and Assumptions
-We will start with some basic definitions and assumptions.
-* A Player is denoted by a BCH address. This BCH address is that Player's PlayerId.
-* A Player uses their private key to sign/authenticate messages they transmit.
-* A Player who wishes to start a game is called the Initiator.
-* A Game is defined as: a set of initial conditions, rules that define valid actions players can take, how the game state changes based on those actions, transitions between Player turns, when the game ends, and what the outcome of the game is.
-* A Game has a GameLobby identifier BCH address.  
-* A Match is an instance of a Game. A concluded Match consists of initial conditions, at least one Player, and a series of Player-induced actions.
-
-####Message Format
+### Message Format
 For basic assumptions and messaging layer details, see [the GC Comm spec](gamechain-comm-specs.md).
 
+### Message Format
 
 Gamechain messages are preceded by a version byte and a message code byte. During development, the version byte will be set to 1. Message codes are as follows.
 
@@ -31,7 +23,7 @@ Gamechain messages are preceded by a version byte and a message code byte. Durin
 | 0x0C                       | **DTD** | Disagree to Draw. Player responds that they are not willing to end the game in a tie. |
 
 
-#### Message/Action: Setting the Table
+### Message/Action: Setting the Table
  The transaction (which may consist of multiple OP_RETURN scripts) contain enough information for a game client to display the game and enable play options as appropriate. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -46,7 +38,7 @@ Gamechain messages are preceded by a version byte and a message code byte. Durin
 | <message_data_size> | Game start conditions | Complete information about how game will start and be played | Depends on game. Information that should be included regardless of game is: player order, player public keys, player addresses | 
 
 
- #### Message/Action: Taking My Turn
+ ### Message/Action: Taking My Turn
  Taking My Turn messages contain enough information for a game client to display the actions of the player and determine which player's turn is next. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -60,7 +52,7 @@ Gamechain messages are preceded by a version byte and a message code byte. Durin
 | <signed_tx_id> | Signed Previous Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous TMT/STT/STC transaction ID. Prevents spoofing of this message.| 
 
 
-#### Message/Action: I Win
+### Message/Action: I Win
 I Win messages contain enough information for a game client to convince other players the sending player has won using a game-specific protocol. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -74,7 +66,7 @@ I Win messages contain enough information for a game client to convince other pl
 | <signed_tx_id> | Signed Previous Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous TMT transaction ID. Prevents spoofing of this message.| 
 
 
-#### Message/Action: I Lose
+### Message/Action: I Lose
 I Lose messages can contain last game-turn information using a game-specific protocol. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -88,7 +80,7 @@ I Lose messages can contain last game-turn information using a game-specific pro
 | <signed_tx_id> | Signed Previous Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous TMT transaction ID. Prevents spoofing of this message.| 
 
 
-#### Message/Action: We Draw
+### Message/Action: We Draw
 We Draw messages contain last game-turn information using a game-specific protocol and indicate the game ends in a tie. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -102,7 +94,7 @@ We Draw messages contain last game-turn information using a game-specific protoc
 | <signed_tx_id> | Signed Previous Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous TMT transaction ID. Prevents spoofing of this message.| 
 
 
-#### Message/Action: I Concede
+### Message/Action: I Concede
 I Concede messages indicate sender accepts losing and will be taking no more turns. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -116,7 +108,7 @@ I Concede messages indicate sender accepts losing and will be taking no more tur
 | <signed_tx_id> | Signed Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous TMT transaction ID. Prevents spoofing of this message.| 
 
 
-#### Message/Action: I Accept Outcome
+### Message/Action: I Accept Outcome
 I Accept Outcome messages indicate sender accepts proferred outcome. They may express a sentiment. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -130,7 +122,7 @@ I Accept Outcome messages indicate sender accepts proferred outcome. They may ex
 | <signed_tx_id> | Signed Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous WIN/LUZ/DRW/CCD transaction ID. Prevents spoofing of this message.| 
 
 
-#### Message/Action: I Dispute Outcome
+### Message/Action: I Dispute Outcome
 I Dispute Outcome messages indicate sender disagrees with proferred outcome. They may express a sentiment. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -144,7 +136,7 @@ I Dispute Outcome messages indicate sender disagrees with proferred outcome. The
 | <signed_tx_id> | Signed Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous WIN/LUZ/DRW/CCD transaction ID. Prevents spoofing of this message.| 
 
  
- #### Message/Action: Propose to Draw
+ ### Message/Action: Propose to Draw
 Propose to Draw messages indicate sender would like to end the game in a draw. They may express a sentiment. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -157,7 +149,7 @@ Propose to Draw messages indicate sender would like to end the game in a draw. T
 | <message_data_size> | Propose to Draw message | Freeform | Any color sender wishes to provide on the draw proposal| 
 | <signed_tx_id> | Signed Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous TMT transaction ID. Prevents spoofing of this message.| 
  
- #### Message/Action: Agree to Draw
+ ### Message/Action: Agree to Draw
 Agree to Draw messages indicate sender accepts ending game in a draw. They may express a sentiment. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |
@@ -170,7 +162,7 @@ Agree to Draw messages indicate sender accepts ending game in a draw. They may e
 | <message_data_size> | Accept to Draw message | Freeform | Any color sender wishes to provide on the draw acceptance | 
 | <signed_tx_id> | Signed Tx ID | Byte array used to authenticate message from transmitters | Signed version of the previous PTD transaction ID. Prevents spoofing of this message.| 
  
- #### Message/Action: Disagree to Draw
+ ### Message/Action: Disagree to Draw
  Propose to Draw messages indicate sender would like to end the game in a draw. They may express a sentiment. The following information is in the OP_RETURN:
  
 | Byte Count | Name    | Format/Values | Description |

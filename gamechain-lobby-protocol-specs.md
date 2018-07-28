@@ -1,16 +1,8 @@
-# GameChain Lobby Protocol Specification
+# GameChain Lobby Protocol
 
-#### Definition and Assumptions
-We will start with some basic definitions and assumptions.
-* A Player is denoted by a BCH address. This BCH address is that Player's PlayerId.
-* A Player uses their private key to sign/authenticate messages they transmit.
-* A Player who wishes to start a game is called the Initiator.
-* A Game is defined as: a set of initial conditions, rules that define valid actions players can take, how the game state changes based on those actions, transitions between Player turns, when the game ends, and what the outcome of the game is.
-* A Game has a GameLobby identifier BCH address.  
-* A Match is an instance of a Game. A concluded Match consists of initial conditions, at least one Player, and a series of Player-induced actions.
-
-####Message Format
 For basic assumptions and messaging layer details, see [the GC Comm spec](gamechain-comm-specs.md).
+
+###Message Format
 
 Gamechain Lobby messages are preceded by a version byte and a message code byte. During development, the version byte will be set to 1. Message codes are as follows.
 
@@ -23,7 +15,7 @@ Gamechain Lobby messages are preceded by a version byte and a message code byte.
 | 0x05                       | **CAN** | Initiator broadcasts that they will not be listening for WTP responses. |
 
 
-#### Message: Looking for Game (LFG)
+### Message: Looking for Game (LFG)
 The Initiator broadcasts a signal that they would like to start a game. They send a specially constructed _Looking for Game_ transaction addressed to the GameLobby address of the Game they want to start. The transaction contains the following information in the OP_RETURN:
 
 | Byte Count | Name    | Format/Values | Description |
@@ -37,7 +29,7 @@ The Initiator broadcasts a signal that they would like to start a game. They sen
 | <signed_message_data_size> | Signed message | Byte array used to authenticate message from initiator | Signed version of the message data | 
 
 
-#### Message: Willing to Play (WTP)
+### Message: Willing to Play (WTP)
 Any client listening to a GameLobby address will see LFG transactions for that Game. To play, they will send a transaction to the Initiator's address. They will use their address as the sender's address. The transaction contains the following information in the OP_RETURN:
 
 | Byte Count | Name    | Format/Values | Description |
@@ -52,10 +44,10 @@ Any client listening to a GameLobby address will see LFG transactions for that G
 | <signed_tx_id> | Signed LFG Tx ID | Byte array used to authenticate message from responders | Signed version of the transaction ID being responded to. Prevents spoofing of this message.| 
 
 
-#### Message: Accept/Reject/Cancel Game
+### Message: Accept/Reject/Cancel Game
 Once the Initiator has received responses, it's required to accept and polite to deny the Responder and start/reject the game. This is done by the Initiator sending a message to the Responder's address and using the Initiator's address as the sender's address. 
 
-####_Accept Game Challenge_
+###_Accept Game Challenge_
 To accept the challenge, the Initiator is responsible for setting up game  "hosting" and publishing the connection information. For the use of GameChain, hosting will be based on a new, unused _game table address_, which is an address players will send messages to. Regardless of hosting mechanism, the Initiator creates a transaction with the following information in the OP_RETURN:
 
 | Byte Count | Name    | Format/Values | Description |
@@ -69,7 +61,7 @@ To accept the challenge, the Initiator is responsible for setting up game  "host
 | <signed_tx_id> | Signed WTP Tx ID | Byte array used to authenticate message from responders | Signed version of the transaction ID being responded to. Prevents spoofing of this message.| 
 
 
-####_Reject Game Challenge_
+###_Reject Game Challenge_
 To turn down the challenge, the transaction contains the following information in the OP_RETURN:
 
 | Byte Count | Name    | Format/Values | Description |
@@ -83,7 +75,7 @@ To turn down the challenge, the transaction contains the following information i
 | <signed_tx_id> | Signed WTP Tx ID | Byte array used to authenticate message from responders | Signed version of the transaction ID being responded to. Prevents spoofing of this message.| 
 
 
-####_Cancel Game Offer_
+###_Cancel Game Offer_
 To cancel an offered game, the Initiator sends a transaction with the following information in the OP_RETURN:
 
 | Byte Count | Name    | Format/Values | Description |

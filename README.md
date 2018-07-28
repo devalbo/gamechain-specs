@@ -4,7 +4,7 @@ Sometimes harder than winning a game itself is finding, rounding up, and synchro
 ### Hypothesis
 A multiplayer game is a set of shared constraints on possible actions starting from an established set of conditions that a group of participants engages in. For video games, finding other parties who want to accept those constraints has traditionally been a developer-driven set of choices based on their software and servers. With Bitcoin Cash, there is a global, low-cost platform for sharing  transactions and messages that isn't bound to a particular server. Just as a variety of cryptocurrency wallets can find each other and transfer units of currency around the Internet, so can a multitude of game clients find other willing parties and transfer intents to play focusing on a shared protocol and not some matchmaking server somewhere.
 
-These projects test the hypothesis that the Bitcoin Cash (BCH) blockchain and mempool with zero-confirmation transaction times can make a reliable, open, non-proprietary game lobby system for multi-player game participation.
+This venture tests the hypothesis that the Bitcoin Cash (BCH) blockchain and mempool with zero-confirmation transaction times can make a reliable, open, non-proprietary game lobby system for multi-player game participation.
 
 Using the [GameChainLobby protocol](gamechain-lobby-protocol-specs.md), participants signal their intent to start or join a game (or one of its variants) with a public key-based player identity along with enough information to let participants connect/watch. Challengers can accept, and game moves/summaries/outcomes could published on the blockchain, too (see [GameChain protocol](gamechain-protocol-specs.md)).
 
