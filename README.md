@@ -1,5 +1,5 @@
-# GameChain/GameChain Lobby
-Sometimes harder than winning a game itself is finding, rounding up, and synchronizing players. Doing it digitally in an open platform is even worse. Let's see if we can't make digital gaming better with a flow something like that.
+# GameChain/GameChain Lobby Protocols
+Sometimes it's easier to win a game than find, round up, and synchronize players. Doing it digitally in an open platform is even worse. Let's see if we can't make digital multiplayer gaming better and more open with a permissionless, peer-to-peer blockchain-based protocol.
 
 ### Hypothesis
 A multiplayer game is a set of shared constraints on possible actions starting from an established set of conditions that a group of participants engages in. For video games, finding other parties who want to accept those constraints has traditionally been a developer-driven set of choices based on their software and servers. With Bitcoin Cash, there is a global, low-cost platform for sharing  transactions and messages that isn't bound to a particular server. Just as a variety of cryptocurrency wallets can find each other and transfer units of currency around the Internet, so can a multitude of game clients find other willing parties and transfer intents to play focusing on a shared protocol and not some matchmaking server somewhere.
@@ -36,3 +36,5 @@ While games might be able to be encoded as Script, I think it's more important t
 
 ## There's a lot to do yet...
 There are a lot of details to work out and conventions/protocols to support all types of games would be very important, but I am optimistic. One thing to note is that games that use randomness should be possible, but I'm starting as simply as possible. Many games have more than two players, which should also be possible, but I will start with only two players to keep communication simple while testing this hypothesis.
+
+The Python implementation of this protocol is [available here.](https://github.com/devalbo/gamechain-py)
